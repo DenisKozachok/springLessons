@@ -2,7 +2,7 @@
 
 <body>
     <div>
-        <form method="post">
+        <form method="post" action="/">
             <input type="text" name="text" test-attribute="testField" placeholder="Fill in text">
             <input type="text" name="tag" test-attribute="testTag" placeholder="Tag">
             <button type="submit">Add message</button>
@@ -10,10 +10,17 @@
     </div>
 
     <div>Message list</div>
+
+    <form method="post" action="/filter">
+        <input type="text" name="filter">
+        <button type="submit">Find</button>
+    </form>
     {{#messages}}
-        <b>{{id}}</b>
-        <span>{{text}}</span>
-        <i>{{tag}}</i>
+        <div>
+            <b>{{id}}</b>
+            <span>{{text}}</span>
+            <i>{{tag}}</i>
+        </div>
     {{/messages}}
 </body>
 </html>
