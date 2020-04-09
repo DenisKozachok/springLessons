@@ -1,6 +1,19 @@
-
 <html>
+
 <body>
-    <div>{{some}}</div>
+    <div>
+        <form method="post">
+            <input type="text" name="text" test-attribute="testField" placeholder="Fill in text">
+            <input type="text" name="tag" test-attribute="testTag" placeholder="Tag">
+            <button type="submit">Add message</button>
+        </form>
+    </div>
+
+    <div>Message list</div>
+    {{#messages}}
+        <b>{{id}}</b>
+        <span>{{text}}</span>
+        <i>{{tag}}</i>
+    {{/messages}}
 </body>
 </html>
