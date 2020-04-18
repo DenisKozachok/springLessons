@@ -56,6 +56,7 @@ public class MainController {
         Iterable<Message> messages;
 
         if (filter != null && filter.isEmpty()) {
+            model.put("foundErrorMessages", "No matching search results");
             messages = messageRepo.findAll();
         } else {
             messages = messageRepo.findByTag(filter);

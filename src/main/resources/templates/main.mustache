@@ -17,7 +17,9 @@
 </div>
 
 <div>Message list</div>
-
+{{#foundErrorMessages}}
+    <b>{{foundErrorMessages}}</b>
+{{/foundErrorMessages}}
 <form method="post" action="/filter">
     <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
     <input type="text" name="filter">
