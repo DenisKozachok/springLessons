@@ -1,16 +1,19 @@
 package com.springLessons.controller;
 
 import com.springLessons.domain.Message;
+import com.springLessons.domain.User;
 import com.springLessons.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,11 +39,12 @@ public class MainController {
 
     @PostMapping("/")
     public String add(
+            @AuthenticationPrincipal User user,
             @RequestParam String text,
             @RequestParam String tag,
             Map<String, Object> model) {
 
-        Message message = new Message(text, tag);
+        Message message = new Message(text, tag, user);
         messageRepo.save(message);
 
         Iterable<Message> messages = messageRepo.findAll();
@@ -56,10 +60,14 @@ public class MainController {
         Iterable<Message> messages;
 
         if (filter != null && filter.isEmpty()) {
-            model.put("foundErrorMessages", "No matching search results");
+            model.put("foundErrorMessages", "Fill in search query");
             messages = messageRepo.findAll();
         } else {
             messages = messageRepo.findByTag(filter);
+            if(((ArrayList) messages).size() == 0){
+                model.put("foundErrorMessages", "No matching search results");
+                messages = messageRepo.findAll();
+            }
         }
         model.put("messages", messages);
         return "main";
