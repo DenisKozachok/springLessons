@@ -34,7 +34,7 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping("/main")
+    @PostMapping("/")
     public String add(
             @RequestParam String text,
             @RequestParam String tag,
